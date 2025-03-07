@@ -9,6 +9,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.List;
+
 @SpringBootApplication
 public class AdvancedMappingsApplication {
 
@@ -25,8 +27,52 @@ public class AdvancedMappingsApplication {
             //deleteInstructor(appDAO);
             //findInstructorDetail(appDAO);
             //deleteInstructorDetail(appDAO);
-            createInstructorWithCourses(appDAO);
+            //createInstructorWithCourses(appDAO);
+            //findInstructorWithCourses(appDAO);
+            findCoursesForInstructor(appDAO);
+            findInstructorWithCoursesJoinFetch(appDAO);
         };
+    }
+
+    private void findInstructorWithCoursesJoinFetch(AppDAO appDAO) {
+        int theId = 6;
+
+        // find the instructor
+        System.out.println("Finding instructor id:" + theId);
+        Instructor instructor = appDAO.findInstructorByIdJoinFetch(theId);
+
+        System.out.println("instructor:" + instructor);
+        System.out.println("the associated courses: " + instructor.getCourses());
+
+        System.out.println("DONE!");
+    }
+
+    private void findCoursesForInstructor(AppDAO appDAO) {
+        int theId = 6;
+
+        // find the instructor
+        Instructor instructor = appDAO.findById(theId);
+        System.out.println("Instructor: " + instructor);
+
+        // find courses for instructor
+        List<Course> courses = appDAO.findCoursesByInstructorId(theId);
+
+        // associate the objects
+        instructor.setCourses(courses);
+
+        System.out.println("the associated courses: " + instructor.getCourses());
+    }
+
+    private void findInstructorWithCourses(AppDAO appDAO) {
+        int theId = 6;
+        System.out.println("Finding instructor id:" + theId);
+
+        Instructor theInstructor = appDAO.findById(theId);
+
+        System.out.println("theInstructor:" + theInstructor);
+        System.out.println("the associated courses: " + theInstructor.getCourses());
+
+        System.out.println("Done!");
     }
 
     private void createInstructorWithCourses(AppDAO appDAO) {
