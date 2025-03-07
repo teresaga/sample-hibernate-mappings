@@ -1,6 +1,7 @@
 package org.example.springboot.advancedmappings;
 
 import org.example.springboot.advancedmappings.dao.AppDAO;
+import org.example.springboot.advancedmappings.entity.Course;
 import org.example.springboot.advancedmappings.entity.Instructor;
 import org.example.springboot.advancedmappings.entity.InstructorDetail;
 import org.springframework.boot.CommandLineRunner;
@@ -23,8 +24,38 @@ public class AdvancedMappingsApplication {
             //findInstructor(appDAO);
             //deleteInstructor(appDAO);
             //findInstructorDetail(appDAO);
-            deleteInstructorDetail(appDAO);
+            //deleteInstructorDetail(appDAO);
+            createInstructorWithCourses(appDAO);
         };
+    }
+
+    private void createInstructorWithCourses(AppDAO appDAO) {
+
+        // Create Instructor
+        Instructor tempInstructor = new Instructor("Chad","Darby","darby@gmail.com");
+
+        // Create Instructor detail
+        InstructorDetail tempInstructorDetail = new InstructorDetail("http://www.google.com","Code");
+
+        // associate the objects
+        tempInstructor.setInstructorDetail(tempInstructorDetail);
+
+        // create some courses
+        Course tempCourse1 = new Course("Kotlin");
+        Course tempCourse2 = new Course("Dart");
+
+        // add courses to instructor
+        tempInstructor.addCourse(tempCourse1);
+        tempInstructor.addCourse(tempCourse2);
+
+        // save the instructor
+        System.out.println("Saving instructor" + tempInstructor);
+        System.out.println("The courses:" + tempInstructor.getCourses());
+        appDAO.save(tempInstructor);
+
+        System.out.println("DONE!");
+
+
     }
 
     private void deleteInstructorDetail(AppDAO appDAO) {
