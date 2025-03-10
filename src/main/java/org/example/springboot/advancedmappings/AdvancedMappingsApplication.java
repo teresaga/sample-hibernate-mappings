@@ -21,9 +21,23 @@ public class AdvancedMappingsApplication {
 
         return runner -> {
             
-            createCourseAndStudents(appDAO);
+            //createCourseAndStudents(appDAO);
+            findCourseAndStudents(appDAO);
             
         };
+    }
+
+    private void findCourseAndStudents(AppDAO appDAO) {
+
+        int theId = 10;
+
+        System.out.println("Finding Course: " + theId);
+        Course course = appDAO.findCourseAndStudentsByCourseId(theId);
+
+        System.out.println("Course: " + course);
+        System.out.println("associated Students: " + course.getStudents());
+
+        System.out.println("DONE!");
     }
 
     private void createCourseAndStudents(AppDAO appDAO) {
