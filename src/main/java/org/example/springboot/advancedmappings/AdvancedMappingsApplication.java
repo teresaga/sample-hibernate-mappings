@@ -1,10 +1,7 @@
 package org.example.springboot.advancedmappings;
 
 import org.example.springboot.advancedmappings.dao.AppDAO;
-import org.example.springboot.advancedmappings.entity.Course;
-import org.example.springboot.advancedmappings.entity.Instructor;
-import org.example.springboot.advancedmappings.entity.InstructorDetail;
-import org.example.springboot.advancedmappings.entity.Review;
+import org.example.springboot.advancedmappings.entity.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,7 +20,32 @@ public class AdvancedMappingsApplication {
     public CommandLineRunner commandLineRunner(AppDAO appDAO) {
 
         return runner -> {
+            
+            createCourseAndStudents(appDAO);
+            
         };
+    }
+
+    private void createCourseAndStudents(AppDAO appDAO) {
+
+        // Create the course
+        Course course = new Course("Javascript");
+
+        // Create students
+        Student student1 = new Student("Teresa", "Torres", "teresa@gmail.com");
+        Student student2 = new Student("Jorge", "Lopez", "martin@gmail.com");
+
+        // add students to the course
+        course.addStudent(student1);
+        course.addStudent(student2);
+
+        // save the course and associated students
+        System.out.println("Creating course: " + course);
+        System.out.println("associated students: " + course.getStudents());
+
+        appDAO.saveCourse(course);
+
+        System.out.println("DONE!!");
     }
 
     private void deleteCourseAndReviews(AppDAO appDAO) {
