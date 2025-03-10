@@ -4,6 +4,7 @@ import org.example.springboot.advancedmappings.dao.AppDAO;
 import org.example.springboot.advancedmappings.entity.Course;
 import org.example.springboot.advancedmappings.entity.Instructor;
 import org.example.springboot.advancedmappings.entity.InstructorDetail;
+import org.example.springboot.advancedmappings.entity.Review;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -34,8 +35,54 @@ public class AdvancedMappingsApplication {
             //updateInstructor(appDAO);
             //updateCourse(appDAO);
             //deleteInstructor(appDAO);
-            deleteCourse(appDAO);
+            //deleteCourse(appDAO);
+
+            //createCourseAndReviews(appDAO);
+            //retrieveCourseWithReviews(appDAO);
+            deleteCourseAndReviews(appDAO);
         };
+    }
+
+    private void deleteCourseAndReviews(AppDAO appDAO) {
+        int theId = 10;
+
+        System.out.println("Deleting course: " + theId);
+        appDAO.deleteCourseById(theId);
+
+        System.out.println("DONE!!");
+    }
+
+    private void retrieveCourseWithReviews(AppDAO appDAO) {
+        int theId = 10;
+
+        System.out.println("Finding course: " + theId);
+        Course course = appDAO.findCourseWithReviewsById(theId);
+
+        System.out.println(course);
+        System.out.println(course.getReviews());
+
+        System.out.println("DONE!!");
+
+    }
+
+    private void createCourseAndReviews(AppDAO appDAO) {
+
+        Course course = new Course("OOP with Javascript");
+
+        // add some reviews
+        course.add( new Review("Great course"));
+        course.add( new Review("Cool course"));
+        course.add( new Review("I didn't like the course"));
+
+        System.out.println("Saving course");
+        System.out.println(course);
+        System.out.println(course.getReviews());
+
+        appDAO.saveCourse(course);
+
+        System.out.println("DONE!!");
+
+
     }
 
     private void deleteCourse(AppDAO appDAO) {
