@@ -7,6 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.nio.charset.CoderResult;
 import java.util.List;
 
 @SpringBootApplication
@@ -22,9 +23,45 @@ public class AdvancedMappingsApplication {
         return runner -> {
             
             //createCourseAndStudents(appDAO);
-            findCourseAndStudents(appDAO);
+            //findCourseAndStudents(appDAO);
+
+            findStudentAndCourses(appDAO);
+
+            //addMoreCoursesForStudent(appDAO);
             
         };
+    }
+
+    private void addMoreCoursesForStudent(AppDAO appDAO) {
+        int theId = 1;
+
+        System.out.println("Finding Student: " + theId);
+        Student student = appDAO.findStudentAndCoursesByStudentId(theId);
+
+        Course course1 = new Course("TypeScript - Basics");
+        Course course2 = new Course("SQL");
+
+        student.addCourse(course1);
+        student.addCourse(course2);
+
+        System.out.println("Saving student: " + student);
+        System.out.println("associated courses: " + student.getCourses());
+
+        appDAO.updateStudent(student);
+
+        System.out.println("DONE!!");
+    }
+
+    private void findStudentAndCourses(AppDAO appDAO) {
+        int theId = 1;
+
+        System.out.println("Finding Student: " + theId);
+        Student student = appDAO.findStudentAndCoursesByStudentId(theId);
+
+        System.out.println("Student: " + student);
+        System.out.println("Courses: " + student.getCourses());
+
+        System.out.println("DONE!!");
     }
 
     private void findCourseAndStudents(AppDAO appDAO) {

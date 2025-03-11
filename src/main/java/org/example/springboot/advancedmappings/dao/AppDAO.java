@@ -3,6 +3,7 @@ package org.example.springboot.advancedmappings.dao;
 import org.example.springboot.advancedmappings.entity.Course;
 import org.example.springboot.advancedmappings.entity.Instructor;
 import org.example.springboot.advancedmappings.entity.InstructorDetail;
+import org.example.springboot.advancedmappings.entity.Student;
 
 import java.util.List;
 
@@ -22,4 +23,6 @@ public interface AppDAO {
     void saveCourse(Course theCourse);
     Course findCourseWithReviewsById(int theId);
     Course findCourseAndStudentsByCourseId(int theId);
+    Student findStudentAndCoursesByStudentId(int theId);
+    void updateStudent(Student theStudent);
 }

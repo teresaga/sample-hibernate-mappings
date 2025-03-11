@@ -6,6 +6,7 @@ import jakarta.transaction.Transactional;
 import org.example.springboot.advancedmappings.entity.Course;
 import org.example.springboot.advancedmappings.entity.Instructor;
 import org.example.springboot.advancedmappings.entity.InstructorDetail;
+import org.example.springboot.advancedmappings.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -145,5 +146,23 @@ public class AppDAOImpl implements AppDAO {
         Course theCourse = query.getSingleResult();
 
         return theCourse;
+    }
+
+    @Override
+    public Student findStudentAndCoursesByStudentId(int theId) {
+        TypedQuery<Student> query = em.createQuery("SELECT s FROM Student s " +
+                                                        "JOIN FETCH s.courses " +
+                                                        "WHERE s.id = :data", Student.class);
+        query.setParameter("data", theId);
+
+        Student theStudent = query.getSingleResult();
+
+        return theStudent;
+    }
+
+    @Override
+    @Transactional
+    public void updateStudent(Student theStudent) {
+        em.merge(theStudent);
     }
 }
