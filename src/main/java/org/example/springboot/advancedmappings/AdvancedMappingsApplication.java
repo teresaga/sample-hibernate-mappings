@@ -25,11 +25,23 @@ public class AdvancedMappingsApplication {
             //createCourseAndStudents(appDAO);
             //findCourseAndStudents(appDAO);
 
-            findStudentAndCourses(appDAO);
+            //findStudentAndCourses(appDAO);
 
             //addMoreCoursesForStudent(appDAO);
-            
+
+            //deleteCourse(appDAO);
+            deleteStudent(appDAO);
         };
+    }
+
+    private void deleteStudent(AppDAO appDAO) {
+        int theId = 1;
+
+        System.out.println("Deleting student " + theId);
+
+        appDAO.deleteStudentById(theId);
+
+        System.out.println("DONE!!");
     }
 
     private void addMoreCoursesForStudent(AppDAO appDAO) {
@@ -142,7 +154,7 @@ public class AdvancedMappingsApplication {
     }
 
     private void deleteCourse(AppDAO appDAO) {
-        int theId = 3;
+        int theId = 10;
 
         System.out.println("Deleting course " + theId);
         appDAO.deleteCourseById(theId);

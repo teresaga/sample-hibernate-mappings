@@ -165,4 +165,19 @@ public class AppDAOImpl implements AppDAO {
     public void updateStudent(Student theStudent) {
         em.merge(theStudent);
     }
+
+    @Override
+    @Transactional
+    public void deleteStudentById(int theId) {
+        Student student = em.find(Student.class, theId);
+
+        if (student != null) {
+
+            for (Course c : student.getCourses()) {
+                c.getStudents().remove(student);
+            }
+        }
+
+        em.remove(student);
+    }
 }
